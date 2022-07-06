@@ -33,14 +33,14 @@
                @foreach ($contents as $item)
                <tr>
                    <td>{{ $increment++ }}</td>
-                   <td>{{ $item->gambar }}</td>
+                   <td><img src="{{ asset('storage/'.$item['gambar'])}}" alt="" srcset="" style="width:5rem;height:5rem"></td>
                    <td>{{ $item->judul }}</td>
                    <td>{{ $item->deskripsi }}</td>
                    <td>
-                       <a href="{{ route('profile.edit', $item->id) }}" class="btn btn-warning">Edit</a>
-                    <form action="{{ route('profile.destroy', $item->id) }}" method="post">
+                       <a href="{{ route('contents.edit', $item->id) }}" class="btn btn-warning">Edit</a>
+                    <form action="{{ route('contents.destroy', $item->id) }}" method="post">
                      @csrf
-                     @method('delete')
+                     @method('DELETE')
                      <button type="submit" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')" class="btn btn-danger mt-1">Hapus</button>
                     </form>
                    </td>

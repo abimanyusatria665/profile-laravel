@@ -90,15 +90,27 @@ public function store(Request $request)
      */
     public function update(Request $request, $id)
     {
-        $contents= Contents::findOrfail($id);
-        $data=[
-            'gambar'=>$request->gambar,
-            'judul'=>$request->judul,
-            'deskripsi'=>$request->deskripsi
-        ];
+        $contents = new Contents;
+        $contents = Contents::findOrfail($id);
+        
 
-        $contents->update($data);
-        return redirect()->route('crud.index')->with('Success', 'Data Content Successfully Edited!');
+    if (isset($request->gambar)) {
+            $request->gambar= $request->gambar->store('public/img');
+            $request->gambar = str_replace('public/', '', $request->gambar);
+            $contents->gambar= $request->gambar;
+        }
+
+        $contents->judul = $request->judul;
+        $contents->deskripsi = $request->deskripsi;        
+
+        $request->validate([
+            'judul' => 'required|string',
+            'deskripsi' => 'required|string',
+        ]);
+
+        $contents->save();
+
+        return redirect()->back()->with('success', 'Data berhasil disimpan');
     }
 
     /**
@@ -111,6 +123,6 @@ public function store(Request $request)
     {
         $contents = Contents::find($id);
         $contents->delete();
-        return redirect()->route('crud.index')->with('Success', 'Data Successfully Deleted!');
+        return redirect()->back()->with('Success', 'Data Successfully Deleted!');
     }
 }

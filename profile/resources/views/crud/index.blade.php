@@ -40,7 +40,7 @@
                        <a href="{{ route('contents.edit', $item->id) }}" class="btn btn-warning">Edit</a>
                     <form action="{{ route('contents.destroy', $item->id) }}" method="post">
                      @csrf
-                     @method('delete')
+                     @method('DELETE')
                      <button type="submit" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')" class="btn btn-danger mt-1">Hapus</button>
                     </form>
                    </td>

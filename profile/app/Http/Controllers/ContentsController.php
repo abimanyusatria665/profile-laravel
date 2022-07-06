@@ -38,24 +38,23 @@ class ContentsController extends Controller
     
 public function store(Request $request)
     {
-        $complaint = new Contents;
+        $content = new Contents;
 
     if (isset($request->gambar)) {
             $request->gambar= $request->gambar->store('public/img');
             $request->gambar = str_replace('public/', '', $request->gambar);
-            $complaint->gambar= $request->gambar;
+            $content->gambar= $request->gambar;
         }
-        $complaint->judul = $request->judul;
-        $complaint->deskripsi = $request->deskripsi;
 
-        
+        $content->judul = $request->judul;
+        $content->deskripsi = $request->deskripsi;        
 
         $request->validate([
             'judul' => 'required|string',
             'deskripsi' => 'required|string',
         ]);
 
-        $complaint->save();
+        $content->save();
 
         return redirect()->back()->with('success', 'Data berhasil disimpan');
     }
